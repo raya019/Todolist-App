@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16.2-alpine
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: todolist
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5433:5432'
+
+  backend:
+    build:
+      context: ./back-end/Todolist-Api
+      dockerfile: Dockerfile
+    container_name: Todolist_Backend
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres_db:5432/todolist
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: root
+    ports:
+      - '8181:8080'
+
+  front-end:
+    build:
+      context: ./front-end/todolist
+      dockerfile: Dockerfile
+    container_name: Todolist_Frontend
+    environment:
+      VITE_BACKEND_URL: 'http://backend:8080/'
+    ports:
+      - '3000:80'
+
+volumes:
+  postgres_data:

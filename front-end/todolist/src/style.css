@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter&family=Lobster&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: url(/bg.svg) no-repeat center;
+  background-size: cover;
+  background-color: #212121;
+  font-family: 'Roboto', sans-serif;
+  @apply h-screen w-screen text-white;
+}
+
+.shadow-style {
+  box-shadow: rgba(253, 224, 71, 0.5) 1.95px 1.95px 2.6px;
+}

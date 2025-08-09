@@ -1,0 +1,682 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Todolist Api",
+    "description": "Todolist Api",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+
+  "paths": {
+    "/api/todolist/add": {
+      "post": {
+        "summary": "Add Todolist" ,
+        "description": "Add Todolist" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "todolist-controller"
+        ],
+        "operationId": "addTodolist",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoAddRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseTodoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todolist/update/{id}": {
+      "put": {
+        "summary": "Update Todolist" ,
+        "description": "Update Todolist" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "todolist-controller"
+        ],
+        "operationId": "updateTodolist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TodoUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseTodoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todolist/get": {
+      "get": {
+        "summary": "Get Todolist" ,
+        "description": "Get Todolist" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "todolist-controller"
+        ],
+        "operationId": "getTodolist",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseListTodoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todolist/get-order-by-name": {
+      "get": {
+        "summary": "Get Todolist Order By Name Todolist" ,
+        "description": "Get Todolist Order By Name Todolist" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "todolist-controller"
+        ],
+        "operationId": "getTodolistOrderByName",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseListTodoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todolist/get-order-by-done": {
+      "get": {
+        "summary": "Get Todolist Order By Done" ,
+        "description": "Get Todolist Order By Done" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "todolist-controller"
+        ],
+        "operationId": "getTodolistOrderByDone",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseListTodoResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todolist/delete/{id}": {
+      "delete": {
+        "summary": "Delete Todolist" ,
+        "description": "Delete Todolist" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "todolist-controller"
+        ],
+        "operationId": "deleteTodolist",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/todolist/delete-all": {
+      "delete": {
+        "summary": "Delete All Todolist" ,
+        "description": "Delete All Todolist" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "todolist-controller"
+        ],
+        "operationId": "deleteALlTodolistByUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+
+    "/api/user/change-password": {
+      "post": {
+        "summary": "User Change Password" ,
+        "description": "User Change Password" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "changePassword",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PasswordRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/user/current": {
+      "get": {
+        "summary": "Get Current User" ,
+        "description": "Get Current User" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "getUser",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseUserResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update Current User" ,
+        "description": "Update Current User" ,
+        "security": [
+          {
+            "AccessToken": [ ]
+          }
+        ],
+        "tags": [
+          "user-controller"
+        ],
+        "operationId": "updateUser",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUserRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseUserResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/auth/register": {
+      "post": {
+        "summary": "Create User" ,
+        "description": "Create New User" ,
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RegisterRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/refresh": {
+      "post": {
+        "summary": "Refresh Token" ,
+        "description": "Refresh Token" ,
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "refreshToken",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseMapStringString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "User Login" ,
+        "description": "User Login" ,
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "login",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserLogin"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseMapStringString"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "summary": "User Logout" ,
+        "description": "User Logout" ,
+        "tags": [
+          "auth-controller"
+        ],
+        "operationId": "logout",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebResponseString"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TodoUpdateRequest": {
+        "required": [
+          "isDone",
+          "todo"
+        ],
+        "type": "object",
+        "properties": {
+          "todo": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TodoResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "todo": {
+            "type": "string"
+          },
+          "isDone": {
+            "type": "boolean"
+          }
+        }
+      },
+      "WebResponseTodoResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/TodoResponse"
+          },
+          "errors": {
+            "$ref": "#/components/schemas/TodoResponse"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "WebResponseString": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string"
+          },
+          "errors": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "PasswordRequest": {
+        "required": [
+          "confirmPassword",
+          "newPassword",
+          "oldPassword"
+        ],
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "maxLength": 2147483647,
+            "minLength": 8,
+            "type": "string"
+          },
+          "newPassword": {
+            "maxLength": 2147483647,
+            "minLength": 8,
+            "type": "string"
+          },
+          "confirmPassword": {
+            "maxLength": 2147483647,
+            "minLength": 8,
+            "type": "string"
+          }
+        }
+      },
+      "TodoAddRequest": {
+        "required": [
+          "todo"
+        ],
+        "type": "object",
+        "properties": {
+          "todo": {
+            "maxLength": 100,
+            "minLength": 0,
+            "type": "string"
+          }
+        }
+      },
+      "RegisterRequest": {
+        "required": [
+          "email",
+          "name",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string"
+          },
+          "email": {
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 2147483647,
+            "minLength": 8,
+            "type": "string"
+          }
+        }
+      },
+      "WebResponseMapStringString": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string"
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "UserLogin": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "UpdateUserRequest": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 30,
+            "minLength": 5,
+            "type": "string"
+          }
+        }
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "WebResponseUserResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/UserResponse"
+          },
+          "errors": {
+            "$ref": "#/components/schemas/UserResponse"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "WebResponseListTodoResponse": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TodoResponse"
+            }
+          },
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TodoResponse"
+            }
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "AccessToken": {
+        "type": "http",
+        "description": "JWT Authorization header using the Bearer scheme.",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
