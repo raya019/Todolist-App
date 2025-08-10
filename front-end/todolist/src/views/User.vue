@@ -46,7 +46,6 @@ const schema = object({
 const {
   errors: errorField,
   setErrors,
-  handleSubmit,
   validateField,
 } = useForm({
   validationSchema: toTypedSchema(schema),
