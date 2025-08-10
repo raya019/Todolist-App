@@ -1,5 +1,6 @@
 package app.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
@@ -11,13 +12,15 @@ import java.util.List;
 
 @Configuration
 public class CORSConfig {
+    @Value("${origin.url}")
+    private String originUrl;
 
     @Bean
     public CorsFilter corsFilter() {
         var source = new UrlBasedCorsConfigurationSource();
         var config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOrigins(List.of("http://localhost:5173"));
+        config.setAllowedOrigins(List.of(originUrl));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE","PATCH"));
         source.registerCorsConfiguration("/**", config);

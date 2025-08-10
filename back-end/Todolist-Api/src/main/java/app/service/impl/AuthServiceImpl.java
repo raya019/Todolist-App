@@ -90,6 +90,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public Map<String, String> refreshToken(HttpServletRequest req, HttpServletResponse res) {
+        if (req.getCookies() ==  null){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+
         var refreshToken = Arrays.stream(req.getCookies())
                 .filter(cookie -> cookie.getName().equals("refreshToken"))
                 .findFirst()
@@ -129,6 +133,10 @@ public class AuthServiceImpl implements AuthService {
     @Override
     @Transactional
     public void logout(HttpServletRequest request, HttpServletResponse response) {
+        if (request.getCookies() ==  null){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+
         var cookieValue = Arrays.stream(request.getCookies())
                 .filter(cookie -> cookie.getName().equals("refreshToken"))
                 .map(Cookie::getValue)
