@@ -20,6 +20,13 @@ defineProps(['isShow'])
           {{ updateUser.data?.message || changePasswordUser.data }}
         </p>
       </div>
+
+      <div
+        v-else-if="changePasswordUser.error && isShow"
+        class="bg-red-100 py-1 px-5 rounded-full border-2 border-solid border-red-400"
+      >
+        <p class="text-red-600">{{ changePasswordUser.error }}</p>
+      </div>
     </FadeTransitionGroup>
 
     <div

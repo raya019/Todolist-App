@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia'
-import { reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
 import { getApi, patchApi, postHeaderApi } from '../util/api'
-import { useAuth } from './storeAuth'
 
 export const useGetUser = defineStore('getUser', () => {
   const data = ref(null)
@@ -51,30 +49,14 @@ export const useChangePassword = defineStore('changePassword', () => {
         data.value = res.data.message
       }
     } catch (e) {
-      error.value = e.response
+      error.value = e.response.data.errors
     }
   }
 
-  return { handleChangePassword, data }
+  function $reset() {
+    data.value = null
+    error.value = null
+  }
+
+  return { handleChangePassword, data, error, $reset }
 })
-
-// export const useLogout = defineStore('logout', () => {
-//   const router = useRouter()
-//   const auth = useAuth()
-//   const error = ref(null)
-
-//   async function onLogout() {
-//     try {
-//       const res = await postHeaderApi('user/logout')
-//       if (res.status === 200) {
-//         auth.logout()
-//         localStorage.removeItem('accessToken')
-//         await router.replace({ name: 'login' })
-//       }
-//     } catch (e) {
-//       error.value = e.response
-//     }
-//   }
-
-//   return { onLogout }
-// })

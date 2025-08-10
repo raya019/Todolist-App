@@ -8,7 +8,7 @@ import { nextTick, ref } from 'vue'
 import { object, string } from 'yup'
 
 const register = useRegister()
-const isShow = ref(register.data || register.error)
+const isShow = ref(false)
 const name = ref(null)
 const email = ref(null)
 const password = ref(null)
@@ -32,6 +32,7 @@ const onSubmitRegister = handleSubmit(
     isShow.value = true
     setTimeout(() => {
       isShow.value = false
+      register.$reset()
     }, 5000)
     resetForm()
   },

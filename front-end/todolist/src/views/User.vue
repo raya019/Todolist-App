@@ -6,13 +6,13 @@ import { useChangePassword, useGetUser, useUpdateUser } from '@/service/storeUse
 import { toTypedSchema } from '@vee-validate/yup'
 import { useForm } from 'vee-validate'
 import { ref, nextTick } from 'vue'
-import { object, string } from 'yup'
+import { object, string, ref as yupRef } from 'yup'
 
 const getUser = useGetUser()
 const updatePassword = useChangePassword()
 const updateUser = useUpdateUser()
 const isDisabled = ref(false)
-const isShow = ref(updateUser.data || updatePassword.data)
+const isShow = ref(false)
 const username = ref(getUser.data.name)
 const password = ref(null)
 const newPassword = ref(null)
@@ -35,7 +35,7 @@ const schemaUpdatePassword = object({
   confirmPassword: string()
     .required()
     .min(8, 'Password must be less than 8 characters')
-    .oneOf([ref('password')], 'password not match'),
+    .oneOf([yupRef('newPassword')], 'password not match'),
 })
 
 const schema = object({
@@ -45,7 +45,6 @@ const schema = object({
 
 const {
   errors: errorField,
-  values,
   setErrors,
   handleSubmit,
   validateField,
@@ -53,32 +52,55 @@ const {
   validationSchema: toTypedSchema(schema),
 })
 
-const onChangePassword = handleSubmit(
-  async (values) => {
+const onChangePassword = async () => {
+  const { valid: valiedOldPassword } = await validateField('oldPassword')
+  const { valid: valiedNewPassword } = await validateField('newPassword')
+  const { valid: valiedConfirmPassword } = await validateField('confirmPassword')
+
+  if (valiedOldPassword && valiedNewPassword && valiedConfirmPassword) {
+    console.log('u click me')
+
     await updatePassword.handleChangePassword({
-      oldPassword: values.oldPassword,
-      newPassword: values.newPassword,
-      confirmPassword: values.confirmPassword,
+      oldPassword: password.value,
+      newPassword: newPassword.value,
+      confirmPassword: confirmPassword.value,
     })
+
     password.value = ''
     newPassword.value = ''
     confirmPassword.value = ''
-    isDisabled.value = !isDisabled.value
-  },
-  async ({ errors }) => {
+
+    if (!updatePassword.error) isDisabled.value = !isDisabled.value
+
+    isShow.value = true
+
+    setTimeout(() => {
+      isShow.value = false
+      updatePassword.$reset()
+    }, 5000)
+  } else {
     await nextTick()
-    const firstError = Object.keys(errors)[0]
+    const firstError = Object.keys(errorField.value)[0]
 
     const el = document.querySelector(`[name="${firstError}"]`)
 
     el?.focus()
-  },
-)
+  }
+}
 
 const onUpdateUser = async () => {
-  const { valid, errors } = await validateField('nameInput')
-  if (valid && !errors) {
-    await updateUser.handleUserUpdate({ name: values.nameInput })
+  const { valid } = await validateField('nameInput')
+
+  if (valid) {
+    await updateUser.handleUserUpdate({ name: username.value })
+    isShow.value = true
+
+    setTimeout(() => {
+      isShow.value = false
+      updateUser.$reset()
+    }, 5000)
+
+    username.value = updateUser.data.data.name
   } else {
     await nextTick()
     const firstError = Object.keys(errorField.value)[0]
@@ -91,7 +113,6 @@ const onUpdateUser = async () => {
 
 const onActiveChangePassword = () => {
   isDisabled.value = !isDisabled.value
-  username.value = getUser.data.name
 }
 
 function onCancelChangePassword() {
