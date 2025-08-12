@@ -1,32 +1,20 @@
-version: '3.8'
-
 services:
-  db:
-    image: postgres:16.2-alpine
-    container_name: postgres_db
-    restart: always
-    environment:
-      POSTGRES_DB: todolist
-      POSTGRES_USER: root
-      POSTGRES_PASSWORD: root
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - '5433:5432'
-
   backend:
     build:
       context: ./back-end/Todolist-Api
       dockerfile: Dockerfile
     container_name: Todolist_Backend
     depends_on:
-      - db
+      - todolist_db
     environment:
-      DATABASE_URL: jdbc:postgresql://postgres_db:5432/todolist
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: root
+      DATABASE_PASSWORD: root123
+      DATABASE_USERNAME: root123
+      DATABASE_URL: jdbc:postgresql://todolist_db:5432/todolist_api
+      url_origin: "http://localhost:3000"
     ports:
-      - '8181:8080'
+      - "8181:8080"
+    networks:
+      - network_todolist
 
   front-end:
     build:
@@ -34,9 +22,32 @@ services:
       dockerfile: Dockerfile
     container_name: Todolist_Frontend
     environment:
-      VITE_BACKEND_URL: 'http://backend:8080/'
+      VITE_BACKEND_URL: "http://backend:8080/"
     ports:
-      - '3000:80'
+      - "3000:80"
+    networks:
+      - network_todolist
+
+  todolist_db:
+    container_name: "todolist_db"
+    image: postgres:16.2-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: todolist_api
+      POSTGRES_USER: root123
+      POSTGRES_PASSWORD: root123
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+    networks:
+      - network_todolist
 
 volumes:
   postgres_data:
+    name: postgres_data
+
+networks:
+  network_todolist:
+    name: network_todolist
+    driver: bridge
