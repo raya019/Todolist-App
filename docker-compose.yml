@@ -1,5 +1,6 @@
 services:
   backend:
+    image: todolist_backend
     build:
       context: ./back-end/Todolist-Api
       dockerfile: Dockerfile
